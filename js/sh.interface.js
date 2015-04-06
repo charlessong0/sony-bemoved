@@ -79,12 +79,15 @@ var SH;
     !function (Interface) {
         var Scrollbar = function () {
             function Scrollbar(el, playhead) {
-                this.offsetInThumb = null, this.trackHeight = null, this.el = $(el), this.thumb = this.el.find('.thumb')[0], this.playhead = playhead, this.bind();
+                this.offsetInThumb = null,
+                    this.trackHeight = null,
+                    this.el = $(el), this.thumb = this.el.find('.thumb')[0], this.playhead = playhead, this.bind();
             }
             return Scrollbar.prototype.bind = function () {
                 var _this = this;
                 this.el.on('click touchstart', function (e) {
-                    _this.playhead.playTo(SH.Util.clamp(0, (e.clientY - 15) / ($(window).height() - 30), 0.99999), !1), _this.playhead.start();
+                    _this.playhead.playTo(SH.Util.clamp(0, (e.clientY - 15) / ($(window).height() - 30), 0.99999), !1),
+                        _this.playhead.start();
                 }), $(this.thumb).on('mousedown', $.proxy(this, 'beginDrag'));
             }, Scrollbar.prototype.setProgress = function (p) {
                 var _this = this;
@@ -92,7 +95,13 @@ var SH;
                     _this.thumb.style.top = '' + 100 * p + '%';
                 });
             }, Scrollbar.prototype.beginDrag = function (e) {
-                e.preventDefault(), this.offsetInThumb = e.clientY - $(this.thumb).offset().top, this.trackHeight = this.el.find('.track').height(), $(window).on('mousemove.dragging', $.proxy(this, 'continueDrag')), $('body').add(window).on('mouseup.dragging blur.dragging', $.proxy(this, 'endDrag')), this.playhead.targetFrame = null;
+                e.preventDefault(),
+                    this.offsetInThumb = e.clientY - $(this.thumb).offset().top,
+                    this.trackHeight = this.el.find('.track').height(),
+                    $(window).on('mousemove.dragging',
+                        $.proxy(this, 'continueDrag')),
+                    $('body').add(window).on('mouseup.dragging blur.dragging', $.proxy(this, 'endDrag')),
+                    this.playhead.targetFrame = null;
             }, Scrollbar.prototype.continueDrag = function (e) {
                 var targetOffset = e.clientY - this.offsetInThumb, percentage = targetOffset / this.trackHeight;
                 this.playhead.seekTo(SH.Util.clamp(0, percentage * (this.playhead.length - 1), this.playhead.length - 1));
@@ -104,6 +113,7 @@ var SH;
     }(SH.Interface || (SH.Interface = {}));
     SH.Interface;
 }(SH || (SH = {}));
+
 var SH;
 !function (SH) {
     !function (Interface) {
@@ -167,7 +177,14 @@ var SH;
         }, storyCache = {}, openStory = null, Story = function () {
             function Story(idString, el) {
                 var _this = this;
-                this.visible = !1, this.expanded = !1, this.inProgress = !1, this.lastState = -1, this.id = idString, this.el = el, this.$el = $(this.el), this.$el.find('.hotspot').on('click', function (e) {
+                this.visible = !1,
+                    this.expanded = !1,
+                    this.inProgress = !1,
+                    this.lastState = -1,
+                    this.id = idString,
+                    this.el = el,
+                    this.$el = $(this.el),
+                    this.$el.find('.hotspot').on('click', function (e) {
                     e.preventDefault(), _this.visible ? _this.hide() : _this.show();
                 }).css({ cursor: 'pointer' });
             }
@@ -178,7 +195,10 @@ var SH;
                         var tpl = document.getElementById('story-template');
                         el = $(tpl).clone().attr({ id: id })[0];
                         var $el = $(el);
-                        $el.find('header h1').html(data.title), $el.find('.content').html(data.copy), tpl.parentNode.appendChild(el), storyCache[id] = new Story(id, el);
+                        $el.find('header h1').html(data.title),
+                            $el.find('.content').html(data.copy),
+                            tpl.parentNode.appendChild(el),
+                            storyCache[id] = new Story(id, el);
                     } else
                         el = document.getElementById(id), storyCache[id] = el && $(el).hasClass('story') ? new Story(id, el) : null;
                 }
@@ -201,7 +221,9 @@ var SH;
                             line
                         ], function (el) {
                             el[0].style.display = 'block';
-                        }), header.height(header.find('h1').height()), content.css({ opacity: 0 }), header.find('h1').stop(!0).transition({ top: '0%' }, 200, 'linear', function () {
+                        }), header.height(header.find('h1').height()),
+                            content.css({ opacity: 0 }),
+                            header.find('h1').stop(!0).transition({ top: '0%' }, 200, 'linear', function () {
                             _this.visible && el.find('.content,.more').stop(!0).transition({ opacity: 1 }, 200);
                         }), el.find('hr.head').stop(!0).transition({ width: '100%' }, 200);
                     }), this.visible = !0, el.addClass('open');
@@ -211,7 +233,8 @@ var SH;
                 if (this.visible) {
                     var el = this.$el, header = el.find('header');
                     requestAnimationFrame(function () {
-                        header.height(header.show().find('h1').height()), header.find('h1').stop(!0).transition({ top: '-100%' }, 200, function () {
+                        header.height(header.show().find('h1').height()),
+                            header.find('h1').stop(!0).transition({ top: '-100%' }, 200, function () {
                             _this.visible || header.hide();
                         }), el.find('hr.head').stop(!0).transition({ width: '0%' }, 200, function () {
                             _this.visible || el.find('hr.head').transition({ display: 'none' }, 0);
@@ -244,7 +267,10 @@ var SH;
                 var _this = this;
                 return this.currentOverlay ? void this.dismiss().then(function () {
                     _this.showContent(content);
-                }) : (this.currentOverlay = this.templateElement.clone().appendTo('body'), this.currentOverlay.find('.content').html(content.clone().show()), this.currentOverlay.css({ opacity: 0 }).show().transition({ opacity: 1 }), this.bindCurrentOverlay(), void 0);
+                }) : (this.currentOverlay = this.templateElement.clone().appendTo('body'),
+                    this.currentOverlay.find('.content').html(content.clone().show()),
+                    this.currentOverlay.css({ opacity: 0 }).show().transition({ opacity: 1 }),
+                    this.bindCurrentOverlay(), void 0);
             }, MobilePopup.prototype.bindCurrentOverlay = function () {
                 var _this = this;
                 this.currentOverlay.on('click', function (e) {
@@ -261,6 +287,7 @@ var SH;
     }(SH.Interface || (SH.Interface = {}));
     SH.Interface;
 }(SH || (SH = {}));
+
 var SH;
 !function (SH) {
     !function (Interface) {
@@ -285,7 +312,10 @@ var SH;
                 this.el = $(el), this.init();
             }
             return MobilePoster.prototype.init = function () {
-                this.popupContent = this.el.find('.popup').hide(), this.popupLink = $('<a href=\'#\' class=\'popup-link\'>Read the Story</a>'), this.popupContent.after($('<p></p>').append(this.popupLink)), this.bind();
+                this.popupContent = this.el.find('.popup').hide(),
+                    this.popupLink = $('<a href=\'#\' class=\'popup-link\'>Read the Story</a>'),
+                    this.popupContent.after($('<p></p>').append(this.popupLink)),
+                    this.bind();
             }, MobilePoster.prototype.bind = function () {
                 var self = this;
                 this.popupLink.on('click', function (e) {
@@ -302,6 +332,7 @@ var SH;
     }(SH.Interface || (SH.Interface = {}));
     SH.Interface;
 }(SH || (SH = {}));
+
 var SH;
 !function (SH) {
     !function (Interface) {
@@ -315,12 +346,18 @@ var SH;
             function Overlays(overlayData, sections, offset) {
                 'undefined' == typeof offset && (offset = 0);
                 var _this = this;
-                this.objectBounds = {}, this.visibleObjects = {}, this.appStoreEnabled = !1, this.appStorePosterID = 'S02_POSTER', this.areAppStoreIconsActive = !1;
+                this.objectBounds = {},
+                    this.visibleObjects = {},
+                    this.appStoreEnabled = !1,
+                    this.appStorePosterID = 'S02_POSTER',
+                    this.areAppStoreIconsActive = !1;
                 var frameIndex = this.frameIndex = {};
                 _.each(overlayData, function (frameData, objectId) {
                     var minFrame = 1 / 0, maxFrame = -1 / 0;
                     _.each(frameData, function (coords, frameNumString) {
-                        minFrame = Math.min(+frameNumString, minFrame), maxFrame = Math.max(+frameNumString, maxFrame), appendOrCreate(frameIndex, frameNumString, objectId);
+                        minFrame = Math.min(+frameNumString, minFrame),
+                            maxFrame = Math.max(+frameNumString, maxFrame),
+                            appendOrCreate(frameIndex, frameNumString, objectId);
                     });
                     var posterFrame;
                     _.each(sections, function (s) {
@@ -340,12 +377,16 @@ var SH;
                 $el.hasClass('poster') || ($el.hasClass('headline') ? y -= 0.25 : $el.hasClass('product-name') && (y -= 0.5));
                 var xAnchor = $el.hasClass('left') ? 'right' : 'left', nonAnchor = 'right' == xAnchor ? 'left' : 'right';
                 el.style[xAnchor] = '' + 100 * x + '%', el.style[nonAnchor] = 'auto', el.style.top = '' + 100 * y + '%';
-            }, Overlays.prototype.setProgress = function (f) {
+            },
+
+                Overlays.prototype.setProgress = function (f) {
                 var _this = this;
                 f -= this.offset;
                 var currentObjects = this.frameIndex['' + f] || [], currentObjectsObject = {};
                 _.each(currentObjects, function (idString) {
-                    var coords = _this.overlayData[idString][f], bounds = _this.objectBounds[idString], story = SH.Interface.Story.getStory(idString);
+                    var coords = _this.overlayData[idString][f],
+                        bounds = _this.objectBounds[idString],
+                        story = SH.Interface.Story.getStory(idString);
                     if (!story && idString.match(/POSTER$/i))
                         var poster = SH.Interface.getPoster(idString);
                     var el, fromMin = f - bounds.start, fromMax = bounds.end - f;
@@ -358,7 +399,13 @@ var SH;
                             var leading = 3 * (Math.max(0, bounds.posterFrame - f) / bounds.startToPoster) + 1.2;
                             el.style.lineHeight = leading;
                         }
-                        _this.visibleObjects[idString] = !0, currentObjectsObject[idString] = !0, _this.appStoreEnabled ? idString == _this.appStorePosterID && (f == _this.objectBounds[_this.appStorePosterID].posterFrame ? _this.areAppStoreIconsActive || ($('.appstore_video_link').on('mouseenter', $.proxy(_this, 'onAppStoreIconMouseOver')), $('.appstore_video_link').on('mouseleave', $.proxy(_this, 'onAppStoreIconMouseOut')), $('#S02_IMAGE_OVERLAY').css('display', 'block'), $('.appstore_icons').css('opacity', 1), _this.updateSelectedIcon(''), _this.areAppStoreIconsActive = !0) : _this.areAppStoreIconsActive && ($('.appstore_video_link').off('mouseenter', $.proxy(_this, 'onAppStoreIconMouseOver')), $('.appstore_video_link').off('mouseleave', $.proxy(_this, 'onAppStoreIconMouseOut')), $('.appstore_icon').removeClass('mouse_over'), $('.appstore_icons').css('opacity', 0.5), $('#S02_IMAGE_OVERLAY').css('display', 'none'), $('.appstore_title').empty(), $('.appstore_desc').empty(), _this.areAppStoreIconsActive = !1)) : $('.appstore_block').hide(), requestAnimationFrame(function () {
+                        _this.visibleObjects[idString] = !0,
+                            currentObjectsObject[idString] = !0,
+                            _this.appStoreEnabled ? idString == _this.appStorePosterID && (f == _this.objectBounds[_this.appStorePosterID].posterFrame ? _this.areAppStoreIconsActive || ($('.appstore_video_link').on('mouseenter', $.proxy(_this, 'onAppStoreIconMouseOver')),
+                                $('.appstore_video_link').on('mouseleave', $.proxy(_this, 'onAppStoreIconMouseOut')),
+                                $('#S02_IMAGE_OVERLAY').css('display', 'block'),
+                                $('.appstore_icons').css('opacity', 1), _this.updateSelectedIcon(''),
+                                _this.areAppStoreIconsActive = !0) : _this.areAppStoreIconsActive && ($('.appstore_video_link').off('mouseenter', $.proxy(_this, 'onAppStoreIconMouseOver')), $('.appstore_video_link').off('mouseleave', $.proxy(_this, 'onAppStoreIconMouseOut')), $('.appstore_icon').removeClass('mouse_over'), $('.appstore_icons').css('opacity', 0.5), $('#S02_IMAGE_OVERLAY').css('display', 'none'), $('.appstore_title').empty(), $('.appstore_desc').empty(), _this.areAppStoreIconsActive = !1)) : $('.appstore_block').hide(), requestAnimationFrame(function () {
                             var el = document.getElementById(idString);
                             el && Overlays.setCoords(el, coords);
                         });
@@ -413,7 +460,20 @@ var SH;
             function LocalNav(el, playhead, sections, offset, navColors) {
                 'undefined' == typeof offset && (offset = 0), 'undefined' == typeof navColors && (navColors = null);
                 var _this = this;
-                this.queued = !1, this.lastProgress = null, this.downButtonTimer = null, this.displayed = !1, this.displayAt = 0, this.el = $(el), this.downButton = this.el.find('.scroll-down'), this.playhead = playhead, this.offset = offset, this.sections = sections, this.navColors = navColors, this.navColorsOverride = document.getElementById('nav-override'), this.scrollThumb = $('.scrollbar .thumb')[0], this.redrawFuncMemo = function () {
+                this.queued = !1,
+                    this.lastProgress = null,
+                    this.downButtonTimer = null,
+                    this.displayed = !1,
+                    this.displayAt = 0,
+                    this.el = $(el),
+                    this.downButton = this.el.find('.scroll-down'),
+                    this.playhead = playhead,
+                    this.offset = offset,
+                    this.sections = sections,
+                    this.navColors = navColors,
+                    this.navColorsOverride = document.getElementById('nav-override'),
+                    this.scrollThumb = $('.scrollbar .thumb')[0],
+                    this.redrawFuncMemo = function () {
                     _this.redraw();
                 }, this.displayAt = sections[0][2] + offset, this.createItems();
             }
@@ -486,7 +546,14 @@ var SH;
     !function (Interface) {
         var Intro = function () {
             function Intro(offset) {
-                'undefined' == typeof offset && (offset = 0), this.progressCallback = null, this.position = -1, this.kfIdx = 0, this.buttonVisible = !0, this.length = 40, this.offset = offset, this.preloadPoster = $('#preloader')[0], this.globalNav = $('#sonynav')[0], this.keyFrames = [0];
+                'undefined' == typeof offset && (offset = 0),
+                    this.progressCallback = null,
+                    this.position = -1, this.kfIdx = 0,
+                    this.buttonVisible = !0,
+                    this.length = 40,
+                    this.offset = offset,
+                    this.preloadPoster = $('#preloader')[0],
+                    this.globalNav = $('#sonynav')[0], this.keyFrames = [0];
             }
             return Intro.prototype.setProgressCallback = function (fun) {
                 this.progressCallback = fun;
@@ -494,13 +561,20 @@ var SH;
                 return 0;
             }, Intro.prototype.renderCurrentFrame = function (silent) {
                 var _this = this;
-                return 'undefined' == typeof silent && (silent = !1), !silent && this.progressCallback && this.position < this.offset && this.progressCallback(this.position / this.length, this.position, this.length), requestAnimationFrame(function () {
+                return 'undefined' == typeof silent && (silent = !1),
+                !silent && this.progressCallback && this.position < this.offset && this.progressCallback(this.position / this.length,
+                    this.position, this.length), requestAnimationFrame(function () {
                     _this.buttonVisible && _this.position > _this.offset && ($(_this.preloadPoster).find('.scroll-down').transition({ opacity: 0 }, 400, function () {
                         $(_this.preloadPoster).find('.scroll-down').hide();
-                    }), _this.buttonVisible = !1), _this.preloadPoster.style.top = -5 * (_this.position - _this.offset) + '%', _this.globalNav.style.top = '-' + 5 * _this.position + '%';
+                    }), _this.buttonVisible = !1),
+                        _this.preloadPoster.style.top = -5 * (_this.position - _this.offset) + '%',
+                        _this.globalNav.style.top = '-' + 5 * _this.position + '%';
                 }), null;
             }, Intro.prototype.seekTo = function (n, silent) {
-                'undefined' == typeof silent && (silent = !1), this.kfIdx = _.indexOf(this.keyFrames, n) + 1, this.position = Math.round(Math.max(0, n)), this.renderCurrentFrame(silent);
+                'undefined' == typeof silent && (silent = !1),
+                    this.kfIdx = _.indexOf(this.keyFrames, n) + 1,
+                    this.position = Math.round(Math.max(0, n)),
+                    this.renderCurrentFrame(silent);
             }, Intro.prototype.nextKeyFrame = function () {
                 return void 0;
             }, Intro.prototype.prevKeyFrame = function () {
@@ -514,6 +588,7 @@ var SH;
     }(SH.Interface || (SH.Interface = {}));
     SH.Interface;
 }(SH || (SH = {}));
+
 var SH;
 !function (SH) {
     !function (Interface) {
@@ -567,7 +642,13 @@ var SH;
                         '#intro-scroll-button button',
                         comp(fade, { bottom: 0 })
                     ]
-                ], this.keyFramesRun = {}, this.animationComplete = $.Deferred(), this.transitionTime = 600, this.delayTime = 400, location.search.match(/SPEEDY/) && (this.transitionTime = 0, this.delayTime = 0), el.addClass('pre-animation-state'), el.show(), this.queue.resolve();
+                ], this.keyFramesRun = {},
+                    this.animationComplete = $.Deferred(),
+                    this.transitionTime = 600,
+                    this.delayTime = 400,
+                location.search.match(/SPEEDY/) && (this.transitionTime = 0, this.delayTime = 0), el.addClass('pre-animation-state'),
+                    el.show(),
+                    this.queue.resolve();
             }
             return PreloadAnimation.prototype.queueAnimation = function (fun) {
                 this.queue = this.queue.then(function () {

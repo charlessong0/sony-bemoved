@@ -205,12 +205,26 @@ var SH;
     }(SH.Video || (SH.Video = {}));
     SH.Video;
 }(SH || (SH = {}));
+
 var SH;
 !function (SH) {
     !function (Video) {
         var Controller = function () {
             function Controller(source, destEl, assetConfig) {
-                this.assetConfig = assetConfig, this.currentProgress = 0, this.lastFrameNumber = -1, this.playTimer = null, this.canJumpNow = !0, this.offset = 0, this.frameQueued = null, this.progressCallback = null, this.scrubTimer = null, this.currentVelocity = 0, this.source = source, this.length = this.source.length, this.el = destEl, this.renderer = assetConfig.rendererClass ? new SH.Video.Renderer[assetConfig.rendererClass](destEl) : new SH.Video.Renderer.ImageToCanvas(destEl), this.keyFrames = _.map(assetConfig.sections, function (el) {
+                this.assetConfig = assetConfig,
+                    this.currentProgress = 0,
+                    this.lastFrameNumber = -1, this.playTimer = null,
+                    this.canJumpNow = !0,
+                    this.offset = 0,
+                    this.frameQueued = null,
+                    this.progressCallback = null,
+                    this.scrubTimer = null,
+                    this.currentVelocity = 0,
+                    this.source = source,
+                    this.length = this.source.length,
+                    this.el = destEl,
+                    this.renderer = assetConfig.rendererClass ? new SH.Video.Renderer[assetConfig.rendererClass](destEl) : new SH.Video.Renderer.ImageToCanvas(destEl),
+                    this.keyFrames = _.map(assetConfig.sections, function (el) {
                     return el[2];
                 }), this.keyFrames.unshift(0), this.hiResDelay = assetConfig.hiResDelay || SH.Config.hiResDelay, this.currentProgress = (assetConfig.startFrame || 0) / (this.length - 1);
             }
