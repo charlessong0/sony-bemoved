@@ -1,0 +1,22 @@
+{
+  "path": "/pics",
+  "path_local": "/pics",
+  "prefix": "SONY_FULL_DROP_05_",
+  "extension": "jpg",
+  "frameNumberTemplate": "00000",
+  "frameCount": 1448,
+  "hiResDelay": 100,
+  "zeroFrameNumber": 25,
+  "sections": [
+               ["hdwf900,Sony4K", 56, 162, "grad-black text-white", "The 4K Journey"],
+               ["soundbar", 182, 312, "grad-blue text-white", "Explosive Sound"],
+               ["xperia", 335, 446, "grad-blue text-white", "Phone and Games"],
+               ["qx100,SonyQX", 492, 601, "grad-pink text-white", "Camera ))) Phone"],
+			   ["walkman", 641, 744, "", "Music Underwater"],
+			   ["ssar1,SonyAudio", 762, 941, "", "Growing Speakers"],
+			   ["hmdt3", 993, 1098, "grad-black text-white", "Face Movies"],
+               ["rx1,SonyRX1", 1126, 1273, "grad-blue text-white", "The Big Small Camera"],
+			   ["ps4", 1303, 1433, "grad-purple text-white", "Sharing Control"],
+               ["guineapig", 1444, 1473, "", "Guinea Pig"]] 
+}
+

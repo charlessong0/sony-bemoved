@@ -1,0 +1,9 @@
+.idea
+.tmp
+pics/*
+*.iml
+target
+node_modules
+dist
+logs
+webapp/test

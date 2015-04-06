@@ -1,0 +1,63 @@
+var SH;
+!function(SH) {
+    !function(Interface) {
+        !function(Facebook) {
+            function share(opts) {
+                return fb.ready ? void FB.ui({method: "feed",name: opts.title || "When engineers meet artists ¨C Sony",link: opts.link || "",description: opts.description,picture: opts.picture || "",caption: opts.caption || ""}) : void $(fb).on("fb_ready", function() {
+                    return share(opts)
+                })
+            }
+            var APP_ID = "189125344611876";
+            -1 != window.location.host.indexOf("assemblyltd") && (APP_ID = "499118600204357");
+            var fb = {SDK: null,ready: !1,onFBinit: function() {
+                    window.FB.init({appId: APP_ID,status: !1,cookie: !0,xfbml: !1}), window.FB.Event.subscribe("edge.create", _.bind(this.onFBLike, this)), window.FB.Event.subscribe("comment.create", _.bind(this.onFBComment, this)), this.SDK = window.FB, this.ready = !0, $(this).triggerHandler("fb_ready")
+                },onFBComment: function(params) {
+                    this.trigger("fb_comment", params)
+                },onFBLike: function(url) {
+                    this.trigger("fb_like", url)
+                }};
+            window.fbAsyncInit = _.bind(fb.onFBinit, fb), function(d) {
+                var js, id = "facebook-jssdk";
+                d.getElementById(id) || (js = d.createElement("script"), js.id = id, js.async = !0, js.src = "https://connect.facebook.net/en_US/all.js", d.getElementsByTagName("head")[0].appendChild(js))
+            }(document), Facebook.share = share, $(function() {
+                $("body").on("click", "a.facebook-share", function(e) {
+                    e.preventDefault();
+                    var targ = $(e.currentTarget), opts = {title: targ.attr("data-share-title"),description: targ.attr("data-share-description"),link: targ.attr("href"),picture: targ.attr("data-share-picture"),caption: targ.attr("data-share-caption")};
+                    share(opts)
+                })
+            })
+        }(Interface.Facebook || (Interface.Facebook = {}));
+        Interface.Facebook
+    }(SH.Interface || (SH.Interface = {}));
+    SH.Interface
+}(SH || (SH = {})), function() {
+    function handleIntent(e) {
+        e = e || window.event;
+        for (var m, left, top, target = e.target || e.srcElement; target && "a" !== target.nodeName.toLowerCase(); )
+            target = target.parentNode;
+        target && "a" === target.nodeName.toLowerCase() && target.href && (m = target.href.match(intentRegex), m && (left = Math.round(winWidth / 2 - width / 2), top = 0, winHeight > height && (top = Math.round(winHeight / 2 - height / 2)), window.open(target.href, "intent", windowOptions + ",width=" + width + ",height=" + height + ",left=" + left + ",top=" + top), e.returnValue = !1, e.preventDefault && e.preventDefault()))
+    }
+    if (!window.__twitterIntentHandler) {
+        var intentRegex = /twitter\.com(\:\d{2,4})?\/intent\/(\w+)/, windowOptions = "scrollbars=yes,resizable=yes,toolbar=no,location=yes", width = 550, height = 420, winHeight = screen.height, winWidth = screen.width;
+        document.addEventListener ? document.addEventListener("click", handleIntent, !1) : document.attachEvent && document.attachEvent("onclick", handleIntent), window.__twitterIntentHandler = !0
+    }
+}();
+var SH;
+!function(SH) {
+    !function(Interface) {
+        !function(Social) {
+            function createShares() {
+                var tpl = $("#social-template");
+                _.each(shareData, function(val, key) {
+                    var node = tpl.clone().attr({id: ""}), title = val.title || $(key + "_TITLE h1").text(), description = val.description || $(key + " p").first().text(), pname = val.caption || $(key.replace(/_POSTER/, "_PRODUCT")).text(), twitterText = val.twitter || encodeURIComponent(title.replace(/[\r\n\s\t]+/g, " ")), twitterUrl = "https://twitter.com/intent/tweet?url=" + Social.SITE_ROOT + encodeURIComponent(val.link) + "&text=" + twitterText;
+                    node.find(".f").attr({"data-share-title": title,"data-share-picture": Social.MEDIA_ROOT + val.picture,"data-share-caption": pname,"data-share-description": description,href: Social.SITE_ROOT + val.link}), node.find(".t").attr({href: twitterUrl}), $(key).find(".poster-content").append(node.show())
+                })
+            }
+            Social.SITE_ROOT = "http://www.sony.com/bemoved/", Social.MEDIA_ROOT = "./";
+            var shareData = {"#videoSharePanel": {link: "",picture: "out/img/fb/FB_video.jpg",title: "We are engineers, but we are also artists.",description: "An artist can challenge an engineer with the impossible. An engineer can make the impossible possible. We measure our success with the flutter of a heart or a bead of cold sweat. After all, it¡¯s not about what we make; it¡¯s about what we make you feel.",caption: "SONY - BE MOVED"},"#S01_POSTER": {link: "#SonyQX",picture: "out/img/fb/FB_qx100.jpg"},"#S02_POSTER": {link: "#xperia",picture: "out/img/fb/FB_xperiaz1s.jpg",title: "Meet the smartphone with PlayStation?4 Remote Play.",caption: "The new Sony Xperia Z3v.",description: "Ever wondered what it¡¯d be like to kill zombies in your backyard? Remote Play connectivity means that our new Xperia Z3v smartphone can connect to your PlayStation?4, allowing you to access the games you love in places other than your living room.",twitter: "Meet the new Xperia Z3v smartphone with PlayStation?4 Remote Play."},"#S03_POSTER": {link: "#walkman",picture: "out/img/fb/FB_walkmanw.jpg"},"#S04_POSTER": {link: "#SonyAudio",picture: "out/img/fb/FB_SSAR1speakers.jpg"},"#S05_POSTER": {link: "#Sony4K",picture: "out/img/fb/FB_Bravia4k.jpg",title: "Sony creates incredible entertainment experiences, from lens to living room.",caption: "4K Ultra HD TV.",description: "First we developed 4K digital motion-picture cameras, then 4K digital cinema projectors and finally the first-ever 4K TV. So when you¡¯re enjoying incredible cinema at home on your new Sony 4K Ultra HD TV, you can rest assured that we¡¯ve been involved in every step of the process.",twitter: "The new 4K Ultra HD TV, from the people who invented 4K Ultra HD TVs."},"#S06_POSTER": {link: "#hmdt3",picture: "out/img/fb/FB_HMZT3.jpg"},"#S07_POSTER": {link: "#SonyRX1",picture: "out/img/fb/FB_RX1.jpg"},"#S08_POSTER": {link: "#ps4",picture: "out/img/fb/FB_PS4.jpg"},"#S09_POSTER": {link: "#guineapig",picture: "out/img/fb/FB_guineapig.jpg"},"#S10_POSTER": {link: "#soundbar",picture: "out/img/fb/FB_Soundbar.jpg",title: "Entertainment experiences sound incredible in 7.1-channel surround sound.",caption: "The Sony ST Series Soundbar.",description: "Designed in conjunction with award-winning sound engineers. Because when you¡¯re trying to make movies sound amazing, it makes sense to work with the people who make movies sound amazing.",twitter: "Experience cinema-quality sound at home with the new ST Series Soundbar from Sony."}};
+            $(createShares)
+        }(Interface.Social || (Interface.Social = {}));
+        Interface.Social
+    }(SH.Interface || (SH.Interface = {}));
+    SH.Interface
+}(SH || (SH = {}));
